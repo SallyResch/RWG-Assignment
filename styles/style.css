@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    text-align: center;
+
+}
+
+.gridContainer {
+    margin: auto;
+    max-width: 60%;
+    display: grid;
+    grid-template: 1fr 1fr 1fr/1fr 1fr 1fr;
+}
