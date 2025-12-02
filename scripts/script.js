@@ -55,7 +55,7 @@ const resultSpanElement = document.querySelector(".result");
 const wrongOrRightElement = document.querySelector(".wrongOrRight");
 const timeDisplay = document.querySelector(".timeDisplay");
 const startGameButton = document.querySelector(".startGameButton");
-
+const restartButton = document.querySelector(".restartButton");
 let cardsChosen = [];
 let cardsChosenIds = [];
 let cardsWon = [];
@@ -78,6 +78,8 @@ const stopTimer = () => {
 startGameButton.addEventListener("click", () => {
   document.querySelector(".gamePlayerStats").classList.remove("hidden")
   startGameButton.classList.add("hidden")
+  restartButton.classList.remove("hidden");
+  userTime = 0;
   timeDisplay.textContent = 0;
   resultSpanElement.textContent = 0;
 
@@ -98,6 +100,30 @@ const createBoard = () => {
   }
 }
 
+function cleanBoard() {
+  stopTimer();
+  userTime = 0;
+  timeDisplay.textContent = "0";
+
+  cardsChosen = [];
+  cardsChosenIds = [];
+  cardsWon = [];
+
+  wrongOrRightElement.innerHTML = "";
+  wrongOrRightElement.classList.remove("red", "green");
+
+  gridElement.innerHTML = "";
+  resultSpanElement.textContent = "0";
+  startGameButton.classList.remove("hidden");
+
+  document.querySelector(".gamePlayerStats").classList.add("hidden");
+  restartButton.classList.add("hidden");
+}
+
+restartButton.addEventListener("click", () => {
+  cleanBoard();
+});
+
 function checkMatch() {
   const allCards = document.querySelectorAll(".card");
   const cardClickedOneId = cardsChosenIds[0];
@@ -105,12 +131,16 @@ function checkMatch() {
   console.log("check for match");
 
   if (cardClickedOneId == cardClickedTwoId) {
+    wrongOrRightElement.classList.remove("red", "green");
+    wrongOrRightElement.classList.add("red");
     wrongOrRightElement.innerHTML = `You clicked the same card twice`;
     allCards[cardClickedOneId].setAttribute("src", "images/square-solid-full.svg")
     allCards[cardClickedTwoId].setAttribute("src", "images/square-solid-full.svg")
   }
 
   if (cardsChosen[0] == cardsChosen[1]) {
+    wrongOrRightElement.classList.remove("red", "green");
+    wrongOrRightElement.classList.add("green");
     wrongOrRightElement.innerHTML = `Correct`;
     allCards[cardClickedOneId].setAttribute('src', 'images/square-check-solid-full.svg')
     allCards[cardClickedTwoId].setAttribute('src', 'images/square-check-solid-full.svg')
@@ -121,6 +151,8 @@ function checkMatch() {
   else {
     allCards[cardClickedOneId].setAttribute("src", "images/square-solid-full.svg")
     allCards[cardClickedTwoId].setAttribute("src", "images/square-solid-full.svg")
+    wrongOrRightElement.classList.remove("red", "green");
+    wrongOrRightElement.classList.add("red");
     wrongOrRightElement.innerHTML = `Wrong`;
   }
 
