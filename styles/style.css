@@ -24,6 +24,17 @@ body {
     grid-template: 1fr 1fr 1fr/1fr 1fr 1fr;
 }
 
+.gamePlayerStats {
+    display: flex;
+    justify-content: center;
+}
+
+.score-title,
+.time-title,
+.clicked-title {
+    padding: 15px;
+}
+
 .startGameButton {
     margin: auto;
     padding: 15px;
@@ -31,6 +42,16 @@ body {
     font-size: 32px;
     border-radius: 10px;
     color: bisque;
+    box-shadow: 10px 10px 10px rgb(227, 155, 0);
+}
+
+.restartButton {
+    margin: auto;
+    padding: 15px;
+    background-color: rgb(245, 192, 0);
+    font-size: 32px;
+    border-radius: 10px;
+    border: 2px solid black;
     box-shadow: 10px 10px 10px rgb(227, 155, 0);
 }
 
