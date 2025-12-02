@@ -52,7 +52,7 @@ const cardArray = [
 const randomizedCards = cardArray.sort(() => 0.5 - Math.random());
 const gridElement = document.querySelector(".gridContainer");
 const resultSpanElement = document.querySelector(".result");
-
+const wrongOrRightElement = document.querySelector(".wrongOrRight");
 const timeDisplay = document.querySelector(".timeDisplay");
 const startGameButton = document.querySelector(".startGameButton");
 
@@ -105,13 +105,13 @@ function checkMatch() {
   console.log("check for match");
 
   if (cardClickedOneId == cardClickedTwoId) {
-    alert("You clicked the same image twice")
+    wrongOrRightElement.innerHTML = `You clicked the same card twice`;
     allCards[cardClickedOneId].setAttribute("src", "images/square-solid-full.svg")
     allCards[cardClickedTwoId].setAttribute("src", "images/square-solid-full.svg")
   }
 
   if (cardsChosen[0] == cardsChosen[1]) {
-    alert("you found a match");
+    wrongOrRightElement.innerHTML = `Correct`;
     allCards[cardClickedOneId].setAttribute('src', 'images/square-check-solid-full.svg')
     allCards[cardClickedTwoId].setAttribute('src', 'images/square-check-solid-full.svg')
     allCards[cardClickedOneId].removeEventListener('click', flipCard)
@@ -121,7 +121,7 @@ function checkMatch() {
   else {
     allCards[cardClickedOneId].setAttribute("src", "images/square-solid-full.svg")
     allCards[cardClickedTwoId].setAttribute("src", "images/square-solid-full.svg")
-    alert("Sorry try again")
+    wrongOrRightElement.innerHTML = `Wrong`;
   }
 
   resultSpanElement.textContent = cardsWon.length;
