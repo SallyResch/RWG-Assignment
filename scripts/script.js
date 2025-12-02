@@ -50,11 +50,49 @@ const cardArray = [
 ]
 
 const randomizedCards = cardArray.sort(() => 0.5 - Math.random());
-const gridElement = document.querySelector(".gridContainer")
+const gridElement = document.querySelector(".gridContainer");
 const resultSpanElement = document.querySelector(".result");
+const timeDisplay = document.querySelector(".timeDisplay");
+const startGameButton = document.querySelector(".startGameButton");
+
 let cardsChosen = [];
 let cardsChosenIds = [];
 let cardsWon = [];
+
+let userTime = 0;
+let timerInterval = null;
+
+// ⭐ Starta timern
+const startTimer = () => {
+    timerInterval = setInterval(() => {
+        userTime++;
+        timeDisplay.textContent = userTime;
+    }, 1000);
+};
+
+// ⭐ Stoppa timern
+const stopTimer = () => {
+    clearInterval(timerInterval);
+    timerInterval = null;
+};
+
+// ⭐ Startknapp
+startGameButton.addEventListener("click", () => {
+    // Reset
+    userTime = 0;
+    cardsWon = [];
+    timeDisplay.textContent = 0;
+    resultSpanElement.textContent = 0;
+
+    // Starta timern
+    if (!timerInterval) startTimer();
+
+    // Rensa och bygg om board
+    gridElement.innerHTML = "";
+    createBoard();
+});
+
+
 
 const createBoard = () => {
     for (let i = 0; i < cardArray.length; i++) {
@@ -67,7 +105,6 @@ const createBoard = () => {
         gridElement.append(card);
     }
 }
-createBoard()
 
 function checkMatch() {
     const allCards = document.querySelectorAll(".card");
@@ -100,7 +137,8 @@ function checkMatch() {
     cardsChosenIds = [];
 
     if (cardsWon.length == (cardArray.length / 2)) {
-        resultSpanElement.innerHTML = "Congratulation, you found them all";
+        resultSpanElement.innerHTML = `Congratulation, you found them all in ${userTime} seconds`;
+        stopTimer();
     }
 }
 
